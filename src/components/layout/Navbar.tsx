@@ -4,14 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiLogOut, FiSettings, FiSearch, FiMenu } from 'react-icons/fi';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { 
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem
-} from '@/components/ui/command';
+import { Badge } from "@/components/ui/badge"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/components/ClientUserProvider';
+import { useAuth } from '@/hooks/useAuth';
+import SearchCommand from '@/components/ui/SearchCommand';
 
 interface NavbarProps {
   className?: string;
@@ -29,7 +24,6 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const { user, signOut } = useAuth();
-  const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,33 +31,13 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Keyboard shortcut for search
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen(true);
-      }
-    };
-
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, []);
   
   return (
-    <header className={`h-16 bg-white rounded-lg shadow-sm p-2 sm:p-4 flex items-center justify-between ${className}`}>
+    <header className={`h-16 rounded-lg shadow-sm p-2 sm:p-4 flex items-center justify-between ${className}`}>
       {/* Logo */}
-      <div className="flex items-center">
-        <Link href="/" className="cursor-pointer">
-          <Image
-            src="/images/realvirally-logo-black.png"
-            alt="RealViraly Logo"
-            width={120}
-            height={40}
-            className="object-contain"
-          />
-        </Link>
+      <div className="flex items-center gap-2">
+      <Badge variant="outline">Balance: $0</Badge>
+      <Badge variant="outline">Total Orders: 0</Badge>
       </div>
       
       {/* Mobile menu button */}
@@ -75,34 +49,10 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
         <FiMenu size={24} />
       </button>
       
-      {/* Search and user controls - desktop */}
-      <div className="hidden md:flex items-center gap-4">
+      {/* Navigation links - desktop */}
+      <div className="hidden md:flex items-center gap-6">
         {/* Search */}
-        <div className="relative max-w-md">
-          <button 
-            onClick={() => setOpen(true)}
-            className="h-10 px-4 flex items-center justify-start rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm cursor-pointer transition-colors w-[180px] lg:w-[220px]"
-          >
-            <FiSearch className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" />
-            <span className="truncate">Search...</span>
-            <span className="hidden lg:inline ml-2 text-xs text-gray-500">⌘K</span>
-          </button>
-          
-          <CommandDialog open={open} onOpenChange={setOpen}>
-            <CommandInput placeholder="Type to search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Pages">
-                <CommandItem>
-                  <Link href="/" className="flex w-full">Home</Link>
-                </CommandItem>
-                <CommandItem>
-                  <Link href="/dashboard" className="flex w-full">Dashboard</Link>
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </CommandDialog>
-        </div>
+        <SearchCommand />
         
         {/* User controls */}
         {mounted && user && (
@@ -184,17 +134,12 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
             {/* Mobile menu content */}
             <div className="flex-1 overflow-y-auto p-4">
               <div className="space-y-4">
-                {/* Search */}
-                <button 
-                  onClick={() => {
-                    setOpen(true);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full h-12 px-4 flex items-center justify-start rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm cursor-pointer transition-colors"
-                >
-                  <FiSearch className="h-5 w-5 mr-3 text-gray-500 flex-shrink-0" />
-                  <span>Search...</span>
-                </button>
+                {/* Search in mobile menu */}
+                <div className="w-full">
+                  <SearchCommand 
+                    className="w-full" 
+                  />
+                </div>
                 
                 {/* Navigation links */}
                 <nav className="space-y-1">
