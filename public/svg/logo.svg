@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for the logo background -->
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0001" />
+    </filter>
+  </defs>
+  
+  <!-- Main logo container -->
+  <g filter="url(#shadow)">
+    <!-- Logo circle -->
+    <circle cx="30" cy="30" r="24" fill="url(#logoGradient)" />
+    
+    <!-- RV letters -->
+    <path d="M18 18 L18 42 L26 42 L26 34 L30 42 L40 42 L30 30 L38 18 L30 18 L26 26 L26 18 Z" fill="white" />
+  </g>
+  
+  <!-- Text "REALVIRALY" -->
+  <g filter="url(#shadow)">
+    <text x="60" y="38" font-family="'Roboto Condensed', Arial, sans-serif" font-weight="600" font-size="24" letter-spacing="-0.04em" text-transform="uppercase" fill="#111">
+      REAL<tspan fill="#4F46E5">VIRALY</tspan>
+    </text>
+  </g>
+</svg>

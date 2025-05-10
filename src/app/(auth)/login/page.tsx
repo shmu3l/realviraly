@@ -23,10 +23,10 @@ export default function LoginPage() {
         <div className="mb-8 flex justify-center">
           <Link href="/">
             <Image
-              src="/realviraly-black.png"
+              src="/images/realvirally-logo-black.png"
               alt="RealViraly Logo"
-              width={150}
-              height={50}
+              width={180}
+              height={60}
               className="object-contain"
             />
           </Link>

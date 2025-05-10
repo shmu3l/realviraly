@@ -30,7 +30,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthStoreInitializer>
-          <Navbar />
           {children}
         </AuthStoreInitializer>
       </body>
