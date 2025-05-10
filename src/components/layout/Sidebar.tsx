@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import LottieIcon from '@/components/ui/LottieIcon';
 // Import Lottie animations directly from JSON files
 import dashboardAnimation from '@/components/ui/lottie-icons/dashboard.json';
@@ -46,11 +47,16 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
     <aside className={`bg-white rounded-lg shadow-sm ${className}`}>
       {/* Header/Logo */}
       <div className="p-4 border-b">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-            RV
-          </div>
-          <span className="font-semibold text-lg">RealViraly</span>
+        <div className="flex items-center justify-center">
+          <Link href="/">
+            <Image
+              src="/images/realvirally-logo-black.png"
+              alt="RealViraly Logo"
+              width={150}
+              height={50}
+              className="object-contain"
+            />
+          </Link>
         </div>
       </div>
       
