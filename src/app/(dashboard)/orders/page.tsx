@@ -7,7 +7,7 @@ interface OrdersPageProps {
 const OrdersPage: React.FC<OrdersPageProps> = (props) => {
   return (
     <div>
-      <h1>New Order Page</h1>
+      <h1>Order Page</h1>
       {/* Add your page content here */}
     </div>
   );

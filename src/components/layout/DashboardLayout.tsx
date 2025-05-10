@@ -11,12 +11,12 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <div className="h-screen bg-gray-50 flex p-4 md:p-6 gap-4 md:gap-6 overflow-hidden">
-      {/* Sidebar - always visible */}
+      {/* Sidebar - always visible on desktop */}
       <div className="w-64 relative z-0 hidden md:block flex-shrink-0">
-        <Sidebar className="h-[calc(100vh-3rem)] shadow-sm" />
+        <Sidebar className="h-[calc(100vh-3rem)]" />
       </div>
       
-      {/* Mobile sidebar - simplified version */}
+      {/* Mobile sidebar trigger - simplified version */}
       <div className="block md:hidden fixed bottom-6 left-6 z-40">
         <div className="bg-gray-100 rounded-full p-3 shadow-lg">
           <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
