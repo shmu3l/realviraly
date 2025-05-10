@@ -15,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/components/ClientUserProvider';
-import { useAuth } from '@/hooks/useAuth';
 import SearchCommand from '@/components/ui/SearchCommand';
 
 interface NavbarProps {
