@@ -12,10 +12,16 @@ import {
   CommandGroup,
   CommandItem
 } from '@/components/ui/command';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/hooks/useAuth';
-
-
-
 
 interface NavbarProps {
   className?: string;
@@ -100,29 +106,50 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
         
         {/* User controls */}
         {mounted && user && (
-          <div className="flex items-center space-x-3">
-            
-              <button 
-                className="text-gray-600 hover:text-gray-900 transition-colors cursor-pointer flex items-center justify-center" 
-                aria-label="Settings"
-              >
-                <FiSettings size={20} />
-              </button>
-              
-              <Avatar className="cursor-pointer h-9 w-9 border-2 border-white shadow-sm">
-                <AvatarImage src={user.photoURL || undefined} />
-                <AvatarFallback className="bg-primary text-primary-foreground font-medium">
-                  {user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}
-                </AvatarFallback>
-              </Avatar>
-              
-              <button 
-                className="text-gray-600 hover:text-gray-900 transition-colors cursor-pointer flex items-center justify-center" 
-                onClick={() => signOut()}
-                aria-label="Sign out"
-              >
-                <FiLogOut size={20} />
-              </button>
+          <div className="flex items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer h-9 w-9 border-2 border-white shadow-sm hover:ring-2 hover:ring-primary/20 transition">
+                  <AvatarImage src={user.photoURL || undefined} />
+                  <AvatarFallback className="bg-primary text-primary-foreground font-medium">
+                    {user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium">Signed in as</p>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={user.photoURL || undefined} />
+                        <AvatarFallback className="text-xs">
+                          {user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col">
+                        <p className="text-sm font-medium leading-none">{user.displayName || 'User'}</p>
+                        <p className="text-xs text-muted-foreground leading-none mt-1">{user.email}</p>
+                      </div>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <Link href="/settings">
+                    <DropdownMenuItem>
+                      <FiSettings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()}>
+                  <FiLogOut className="mr-2 h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
       </div>
