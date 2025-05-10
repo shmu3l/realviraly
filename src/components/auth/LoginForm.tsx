@@ -1,26 +1,39 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
+import { signInWithGoogle } from "@/lib/firebase/auth";
+import { useAuth } from "@/components/ClientUserProvider";
 
 // Note: If react-icons package is installed, you can use this instead:
 // import { FcGoogle } from "react-icons/fc";
 
 export default function LoginForm() {
-  const { signInWithGoogle } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { refreshUser } = useAuth();
 
   const handleGoogleSignIn = async () => {
     try {
       setIsLoading(true);
       setError(null);
-      await signInWithGoogle();
-      router.push("/");
+      
+      const success = await signInWithGoogle();
+      
+      if (success) {
+        // Refresh user data after successful login
+        await refreshUser();
+        
+        // Check if there's a 'from' parameter to redirect back to
+        const fromPath = searchParams.get('from');
+        router.push(fromPath || '/');
+      } else {
+        setError("Authentication failed. Please try again.");
+      }
     } catch (err) {
       console.error("Error signing in with Google", err);
       setError("Failed to sign in with Google. Please try again.");

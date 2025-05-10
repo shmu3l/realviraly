@@ -1,21 +1,21 @@
-'use client';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { isUserAuthenticated } from '@/lib/firebase/firebase-admin';
 import LoginForm from "@/components/auth/LoginForm";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from '@/hooks/useAuth';
 
-export default function LoginPage() {
-  const router = useRouter();
-  const { user, loading } = useAuth();
-
-  useEffect(() => {
-    if (!loading && user) {
-      router.push('/');
-    }
-  }, [user, loading, router]);
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: { from?: string };
+}) {
+  // Server-side authentication check
+  const isAuthenticated = await isUserAuthenticated();
+  
+  // If already authenticated, redirect to home or the original page user was trying to access
+  if (isAuthenticated) {
+    redirect(searchParams.from || '/');
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -23,10 +23,10 @@ export default function LoginPage() {
         <div className="mb-8 flex justify-center">
           <Link href="/">
             <Image
-              src="/images/realvirally-logo-black.png"
+              src="/realviraly-black.png"
               alt="RealViraly Logo"
-              width={180}
-              height={60}
+              width={150}
+              height={50}
               className="object-contain"
             />
           </Link>
@@ -34,6 +34,15 @@ export default function LoginPage() {
         
         <div className="rounded-xl border bg-card p-6 shadow-sm">
           <LoginForm />
+        </div>
+        
+        <div className="mt-4 text-center text-sm">
+          <p className="text-gray-500">
+            Don&apos;t have an account?{" "}
+            <Link href="/register" className="text-primary font-medium hover:underline">
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </div>

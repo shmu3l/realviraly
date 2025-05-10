@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/components/ClientUserProvider';
 
 interface NavbarProps {
   className?: string;
