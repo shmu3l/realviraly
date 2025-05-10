@@ -1,44 +1,46 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { VscDashboard } from "react-icons/vsc";
-import { CiCirclePlus } from "react-icons/ci";
-import { CiBoxList } from "react-icons/ci";
-import { PiHandCoinsThin } from "react-icons/pi";
-
+import LottieIcon from '@/components/ui/LottieIcon';
+// Import Lottie animations directly from JSON files
+import dashboardAnimation from '@/components/ui/lottie-icons/dashboard.json';
+import ordersAnimation from '@/components/ui/lottie-icons/orders.json';
+import newOrderAnimation from '@/components/ui/lottie-icons/new-order.json';
+import addFundsAnimation from '@/components/ui/lottie-icons/add-funds.json';
 
 interface SidebarProps {
   className?: string;
 }
 
-// Dashboard routes
+// Dashboard routes with Lottie animations
 const routes = [
   {
     title: "Dashboard",
     href: "/",
-    icon: VscDashboard,
+    animation: dashboardAnimation,
   },
   {
     title: "Orders",
     href: "/orders",
-    icon: CiBoxList,
+    animation: ordersAnimation,
   },
   {
     title: "New Order",
     href: "/new-order",
-    icon: CiCirclePlus,
+    animation: newOrderAnimation,
   },
   {
     title: "Add Funds",
     href: "/add-funds",
-    icon: PiHandCoinsThin,
+    animation: addFundsAnimation,
   },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   const pathname = usePathname();
+  const [hoveredRoute, setHoveredRoute] = useState<string | null>(null);
   
   return (
     <aside className={`bg-white rounded-lg shadow-sm ${className}`}>
@@ -60,14 +62,22 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             {routes.map((route) => {
               const isActive = pathname === route.href || 
                 (route.href !== '/' && pathname.startsWith(route.href));
+              const isHovered = hoveredRoute === route.href;
               
               return (
                 <Link 
                   key={route.href} 
                   href={route.href}
                   className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm ${isActive ? 'bg-primary/10 text-primary font-medium' : 'text-gray-700 hover:bg-gray-100'}`}
+                  onMouseEnter={() => setHoveredRoute(route.href)}
+                  onMouseLeave={() => setHoveredRoute(null)}
                 >
-                  <route.icon size={18} className={isActive ? 'text-primary' : 'text-gray-500'} />
+                  <LottieIcon 
+                    animationData={route.animation} 
+                    size={20} 
+                    className={isActive ? 'text-primary' : 'text-gray-500'}
+                    isHovered={isHovered}
+                  />
                   <span>{route.title}</span>
                 </Link>
               );
