@@ -35,15 +35,6 @@ export default function LoginPage() {
         <div className="rounded-xl border bg-card p-6 shadow-sm">
           <LoginForm />
         </div>
-        
-        <div className="mt-4 text-center text-sm">
-          <p className="text-gray-500">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-primary font-medium hover:underline">
-              Sign up
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
