@@ -4,17 +4,23 @@ import LoginForm from "@/components/auth/LoginForm";
 import Image from "next/image";
 import Link from "next/link";
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
+type PageProps = {
+  searchParams: Promise<{ from?: string }>;
+}
+
 export default async function LoginPage({
   searchParams,
-}: {
-  searchParams: { from?: string };
-}) {
+}: PageProps) {
   // Server-side authentication check
   const isAuthenticated = await isUserAuthenticated();
   
   // If already authenticated, redirect to home or the original page user was trying to access
   if (isAuthenticated) {
-    redirect(searchParams.from || '/');
+    const params = await searchParams;
+    redirect(params.from || '/');
   }
 
   return (

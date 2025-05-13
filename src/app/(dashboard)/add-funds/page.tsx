@@ -1,10 +1,9 @@
 import React from 'react';
 
-interface AddFundsPageProps {
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
 
-}
-
-const AddFundsPage: React.FC<AddFundsPageProps> = (props) => {
+const AddFundsPage = () => {
   return (
     <div>
       <h1>Add Funds</h1>

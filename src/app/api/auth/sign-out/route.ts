@@ -3,9 +3,11 @@ import { cookies } from "next/headers";
 
 import { revokeAllSessions } from "@/lib/firebase/firebase-admin";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   // Get the session cookie from the request
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("__session")?.value;
 
   if (!sessionCookie) {

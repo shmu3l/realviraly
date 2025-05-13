@@ -1,10 +1,9 @@
 import React from 'react';
 
-interface NewOrderPageProps {
-  // Define your props here
-}
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
 
-const NewOrderPage: React.FC<NewOrderPageProps> = (props) => {
+const NewOrderPage = () => {
   return (
     <div>
       <h1>New Order Page</h1>

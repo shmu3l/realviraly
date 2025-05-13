@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 interface LottieIconProps {
-  animationData: any;
+  animationData: unknown;
   size?: number;
   className?: string;
   isHovered?: boolean; // Accept external hover state

@@ -1,10 +1,9 @@
 import React from 'react';
 
-interface SettingsPageProps {
-  // Define your props here
-}
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
 
-const SettingsPage: React.FC<SettingsPageProps> = (props) => {
+const SettingsPage = () => {
   return (
     <div>
       <h1>Settings Page</h1>

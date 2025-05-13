@@ -1,6 +1,6 @@
 import "server-only";
 
-import { headers, cookies } from "next/headers";
+import { headers } from "next/headers";
 
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { SessionCookieOptions, getAuth } from "firebase-admin/auth";
@@ -37,7 +37,9 @@ function getServiceAccountCredentials() {
 }
 
 // Initialize Firebase Admin SDK - with error handling
-let firebaseApp: any;
+import { App } from 'firebase-admin/app';
+
+let firebaseApp: App;
 try {
   firebaseApp = 
     getApps().find((app) => app.name === "firebase-admin-app") ||

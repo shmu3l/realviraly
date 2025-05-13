@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiLogOut, FiSettings, FiSearch, FiMenu } from 'react-icons/fi';
+import { FiLogOut, FiSettings, FiMenu } from 'react-icons/fi';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from "@/components/ui/badge"
 import {
